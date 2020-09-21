@@ -6,10 +6,10 @@ const defaultConnectionOptions: ConnectionOptions = {
     logging: true,
     entities: ['entities/**/*.*'],
     type: 'postgres',
-    host: process.env.DB_ENDPOINT || 'localhost',
+    host: process.env.DB_ENDPOINT,
     port: 5432,
-    username: process.env.DB_USERNAME || 'yurii.heivakh',
-    password: process.env.DB_PASSWORD || '',
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
 }
 
 export default defaultConnectionOptions;
