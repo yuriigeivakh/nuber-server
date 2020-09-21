@@ -2,7 +2,7 @@ import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGene
 import { EMAIL, PHONE, verificationTarget } from '../types/types';
 
 @Entity()
-class User extends BaseEntity {
+class Verification extends BaseEntity {
     @PrimaryGeneratedColumn() id: number;
 
     @Column({type: 'text', enum: [PHONE, EMAIL]}) target: verificationTarget;
@@ -27,4 +27,4 @@ class User extends BaseEntity {
     }
 }
 
-export default User
+export default Verification
