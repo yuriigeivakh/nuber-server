@@ -1,5 +1,6 @@
+import bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 class User extends BaseEntity {
@@ -19,7 +20,7 @@ class User extends BaseEntity {
 
     @Column({type: 'text'}) phoneNumber: string;
 
-    @Column({type: 'boolean', default: false}) verifiedPhoneNumber: string;
+    @Column({type: 'boolean', default: false}) verifiedPhoneNumber: boolean;
 
     @Column({type: 'text'}) profilePhoto: string;
 
@@ -42,6 +43,23 @@ class User extends BaseEntity {
     @CreateDateColumn() createdAt: string;
 
     @UpdateDateColumn() updatedAt: string;
+
+    private hashPassword(password: string): Promise<string> {
+        return bcrypt.hash(password, 10)
+    }
+
+    public async comparePassword(password: string): Promise<boolean> {
+        return bcrypt.compare(password, this.password);
+    }
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async savePassword(): Promise<void> {
+        if (this.password) {
+            const hashedPassword = await this.hashPassword(this.password);
+            this.password = hashedPassword;
+        }
+    }
 }
 
 export default User
