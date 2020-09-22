@@ -1,4 +1,4 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { EMAIL, PHONE, verificationTarget } from '../types/types';
 import User from './User';
 
@@ -20,14 +20,14 @@ class Verification extends BaseEntity {
 
     @UpdateDateColumn() updatedAt: string;
 
-    @BeforeInsert()
-    private createKey(): void {
-        if (this.target === PHONE) {
-            this.key = Math.floor(Math.random() * 100000).toString();
-        } else {
-            this.key = Math.random().toString(36).substr(2);
-        }
-    }
+    // @BeforeInsert()
+    // private createKey(): void {
+    //     if (this.target === PHONE) {
+    //         this.key = Math.floor(Math.random() * 100000).toString();
+    //     } else {
+    //         this.key = Math.random().toString(36).substr(2);
+    //     }
+    // }
 }
 
 export default Verification
