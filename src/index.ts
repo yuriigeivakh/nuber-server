@@ -15,6 +15,7 @@ const appOptions: Options = {
     port: PORT,
     playground: PLAYGROUND,
     endpoint: GRAPHQL_ENDPOINT,
+    cors: false,
 };
 
 const handleAppStart = () => console.log(`Listening on port ${PORT}`);
