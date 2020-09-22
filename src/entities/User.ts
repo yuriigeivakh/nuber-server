@@ -1,6 +1,10 @@
 import bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
-import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import Chat from './Chat';
+import Message from './Message';
+import Ride from './Ride';
+import Verification from './Verification';
 
 @Entity()
 class User extends BaseEntity {
@@ -33,6 +37,16 @@ class User extends BaseEntity {
     @Column({type: 'boolean', default: false}) isRiding: boolean;
 
     @Column({type: 'boolean', default: false}) isTaken: boolean;
+
+    @OneToMany(type => Chat, chat => chat.participants) chat: Chat[];
+
+    @OneToMany(type => Message, message => message.user) messages: Message[];
+
+    @OneToMany(type => Verification, verification => verification.user) verifications: Verification[];
+    
+    @OneToMany(type => Ride, ride => ride.passenger) ridesAsPassenger: Ride[];
+
+    @OneToMany(type => Ride, ride => ride.driver) ridesADriver: Ride[];
 
     @Column({type: 'double precision', default: 0}) lastLng: number;
 

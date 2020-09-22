@@ -1,5 +1,6 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ACCEPTED, CANCELED, FINISHED, ONROUTE, REQUESTING, rideStatus } from '../types/types';
+import User from './User';
 
 @Entity()
 class Ride extends BaseEntity {
@@ -24,6 +25,10 @@ class Ride extends BaseEntity {
     @Column({type: 'text'}) distance: string;
 
     @Column({type: 'text'}) duration: string;
+
+    @ManyToOne(type => User, user => user.ridesAsPassenger) passenger: User;
+
+    @ManyToOne(type => User, user => user.ridesADriver) driver: User;
 
     @CreateDateColumn() createdAt: string;
 
