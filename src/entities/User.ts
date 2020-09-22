@@ -10,7 +10,7 @@ import Verification from './Verification';
 class User extends BaseEntity {
     @PrimaryGeneratedColumn() id: number;
 
-    @Column({type: 'text', unique: true}) @IsEmail() email: string;
+    @Column({type: 'text', unique: true, nullable: true}) @IsEmail() email: string | null;
 
     @Column({type: 'boolean', default: false}) verifiedEmail: string;
 
@@ -18,7 +18,7 @@ class User extends BaseEntity {
     
     @Column({type: 'text'}) lastName: string;
 
-    @Column({type: 'int'}) age: number;
+    @Column({type: 'int', nullable: true}) age: number;
 
     @Column({type: 'text'}) password: string;
 
@@ -27,6 +27,8 @@ class User extends BaseEntity {
     @Column({type: 'boolean', default: false}) verifiedPhoneNumber: boolean;
 
     @Column({type: 'text'}) profilePhoto: string;
+
+    @Column({type: 'text', nullable: true}) fbId: string;
 
     get fullName(): string {
         return `${this.firstName} ${this.lastName}`
